@@ -1,26 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+
+import './config/ReactotronConfig';
+
+import { Provider } from 'react-redux';
+import store from './store';
+
+import { BrowserRouter } from 'react-router-dom'
+import { ThemeProvider } from 'styled-components'
+import { GlobalStyle, theme } from './theme/globalStyle'
+import {
+	Container
+} from './styleApp';
+
+import Routes from './config/routes'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	return (
+		<Provider store={store}>
+			<ThemeProvider theme={theme}>
+				<Container>
+					<BrowserRouter>
+						<Routes />
+					</BrowserRouter>
+				</Container>
+			</ThemeProvider>
+			<GlobalStyle />
+		</Provider>
+	);
 }
 
 export default App;
