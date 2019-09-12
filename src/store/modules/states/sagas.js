@@ -2,10 +2,9 @@ import {
 	all, takeLatest, call, put,
 } from 'redux-saga/effects';
 
-import { apiLocation, apiSocialProgram } from '../../../services/api';
+import { apiLocation } from '../../../services/api';
 
 import * as StatesActions from './actions';
-// import { formatDate, hour, minutes } from '../../../util/format';
 
 function* loadStatesRequest() {
 	try {

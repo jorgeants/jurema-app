@@ -5,6 +5,9 @@ import { connect } from 'react-redux';
 
 import * as StatesActions from '../../store/modules/states/actions';
 
+import StateSelect from '../../components/StateSelect';
+import CitySelect from '../../components/CitySelect';
+
 // import { Container } from './styles';
 
 class Report extends Component {
@@ -15,16 +18,13 @@ class Report extends Component {
 	}
 
 	render() {
-		const { states } = this.props;
+		const { states, cities } = this.props;
 
 		return (
 			<div>
 				<h1>Report</h1>
-				{states.map((restaurant) => (
-					<span key={restaurant.id} style={{ display: "block" }}>
-						{restaurant.name}
-					</span>
-				))}
+				<StateSelect items={states} />
+				<CitySelect items={cities} />
 			</div>
 		);
 	}
@@ -35,6 +35,7 @@ const mapStateToProps = state => ({
 	loading: state.states.loading,
 	error: state.states.error,
 	errorMessage: state.states.errorMessage,
+	cities: state.cities.data,
 });
 
 const mapDispatchToProps = dispatch =>

@@ -5,14 +5,13 @@ const INITIAL_STATE = {
 	success: false,
 	successMessage: null,
 	loading: false,
-	searchTerm: null,
 };
 
-export default function session(state = INITIAL_STATE, action) {
+export default function states(state = INITIAL_STATE, action) {
 	switch (action.type) {
-		case '@restaurants/LOAD_REQUEST':
+		case '@states/LOAD_REQUEST':
 			return { ...state, loading: true };
-		case '@restaurants/LOAD_SUCCESS':
+		case '@states/LOAD_SUCCESS':
 			return {
 				...state,
 				data: action.payload.data,
@@ -20,7 +19,7 @@ export default function session(state = INITIAL_STATE, action) {
 				errorMessage: null,
 				loading: false,
 			};
-		case '@restaurants/LOAD_FAILURE':
+		case '@states/LOAD_FAILURE':
 			return {
 				...state,
 				error: true,
