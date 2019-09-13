@@ -17,7 +17,7 @@ export const loadDataProgramRequest = idCity => ({
 	payload: { idCity },
 });
 
-export const loadDataProgramSuccess = data => ({
+export const loadDataProgramSuccess = dataProgram => ({
 	type: '@cities/LOAD_DATA_PROGRAM_SUCCESS',
-	payload: { data },
+	payload: { dataProgram },
 });

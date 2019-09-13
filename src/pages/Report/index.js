@@ -7,6 +7,7 @@ import * as StatesActions from '../../store/modules/states/actions';
 
 import StateSelect from '../../components/StateSelect';
 import CitySelect from '../../components/CitySelect';
+import Chart from '../../components/Chat';
 
 // import { Container } from './styles';
 
@@ -25,6 +26,7 @@ class Report extends Component {
 				<h1>Report</h1>
 				<StateSelect items={states} />
 				<CitySelect items={cities} />
+				<Chart />
 			</div>
 		);
 	}

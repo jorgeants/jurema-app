@@ -7,7 +7,7 @@ const INITIAL_STATE = {
 	success: false,
 	successMessage: null,
 	loading: false,
-	dataProgram: {}
+	dataProgram: [],
 };
 
 export default function cities(state = INITIAL_STATE, action) {
