@@ -21,3 +21,8 @@ export const loadDataProgramSuccess = dataProgram => ({
 	type: '@cities/LOAD_DATA_PROGRAM_SUCCESS',
 	payload: { dataProgram },
 });
+
+export const loadDataProgramFailure = errorMessageDataProgram => ({
+	type: '@cities/LOAD_DATA_PROGRAM_Failure',
+	payload: { errorMessageDataProgram },
+});

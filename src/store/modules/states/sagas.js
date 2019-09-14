@@ -13,8 +13,6 @@ function* loadStatesRequest() {
 			'/localidades/estados',
 		);
 
-		console.tron.log(response);
-
 		yield put(StatesActions.loadStatesSuccess(response.data));
 	} catch (error) {
 		yield put(StatesActions.loadStatesFailure());

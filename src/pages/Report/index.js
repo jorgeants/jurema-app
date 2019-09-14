@@ -9,7 +9,16 @@ import StateSelect from '../../components/StateSelect';
 import CitySelect from '../../components/CitySelect';
 import Chart from '../../components/Chat';
 
-// import { Container } from './styles';
+import {
+	Wrapper,
+	Header,
+	Title,
+	Instructions,
+	Filter,
+	ContainerChart,
+	EmptyMessageWrapper,
+	EmptyMessage
+} from './styles';
 
 class Report extends Component {
 	componentDidMount() {
@@ -18,16 +27,31 @@ class Report extends Component {
 		loadStatesRequest();
 	}
 
+	emptyMessage = () => {
+		return (
+			<EmptyMessageWrapper>
+				<EmptyMessage>Nenhuma informação para ser exibida</EmptyMessage>
+			</EmptyMessageWrapper>
+		);
+	}
+
 	render() {
-		const { states, cities } = this.props;
+		const { states, cities, dataProgram, dataProgramLoading } = this.props;
 
 		return (
-			<div>
-				<h1>Report</h1>
-				<StateSelect items={states} />
-				<CitySelect items={cities} />
-				<Chart />
-			</div>
+			<Wrapper>
+				<Header>
+					<Title>Relatório de beneficiários do Programa Bolsa Família</Title>
+					<Instructions>Selecione o estado e a cidade para obter os dados</Instructions>
+				</Header>
+				<Filter>
+					<StateSelect items={states} />
+					<CitySelect items={cities} />
+				</Filter>
+				<ContainerChart>
+					{(dataProgramLoading || dataProgram.length !== 0) ? <Chart /> : this.emptyMessage()}
+				</ContainerChart>
+			</Wrapper>
 		);
 	}
 }
@@ -38,6 +62,8 @@ const mapStateToProps = state => ({
 	error: state.states.error,
 	errorMessage: state.states.errorMessage,
 	cities: state.cities.data,
+	dataProgram: state.cities.dataProgram,
+	dataProgramLoading: state.cities.dataProgramLoading,
 });
 
 const mapDispatchToProps = dispatch =>

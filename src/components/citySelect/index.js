@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import * as CitiesActions from '../../store/modules/cities/actions';
 
-// import { Container } from './styles';
+import { WrapperSelect, SelectItemsLabel, SelectItems, SelectItemsOption } from './styles';
 
 class CitySelect extends Component {
   constructor(props) {
@@ -17,9 +17,9 @@ class CitySelect extends Component {
 
   optionItem = (item) => {
     return (
-      <option key={item.id} value={item.id}>
+      <SelectItemsOption key={item.id} value={item.id}>
         {item.nome}
-      </option>
+      </SelectItemsOption>
     );
   }
 
@@ -36,11 +36,14 @@ class CitySelect extends Component {
     const { citySelected } = this.state;
 
     return (
-      <div>
-        <select id="citySelected" value={citySelected} onChange={this.handleChangeCity}>
+      <WrapperSelect>
+        <SelectItemsLabel>
+          Cidade
+        </SelectItemsLabel>
+        <SelectItems id="citySelected" value={citySelected} onChange={this.handleChangeCity}>
           {items.map(this.optionItem)}
-        </select>
-      </div>
+        </SelectItems>
+      </WrapperSelect>
     );
   }
 }

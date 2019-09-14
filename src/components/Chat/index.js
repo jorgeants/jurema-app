@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import {
-  BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+  ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
 } from 'recharts';
 
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-// import { Container } from './styles';
+import { formatMonthShortName, formatYear, formatDecimal } from '../../util/format';
+
+import { theme } from '../../theme/globalStyle';
+import { LoadingMessageWrapper, LoadingMessage } from './styles';
 
 class Chat extends Component {
   constructor(props) {
@@ -16,14 +18,15 @@ class Chat extends Component {
     };
   }
 
-  // componentDidMount() {
-  //   this.serializeDataToChart();
-  // }
-
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (prevProps.dataProgram !== this.props.dataProgram) {
       this.serializeDataToChart();
     }
+  }
+
+  parseToMonthShortNameAndYear = (referenceDate) => {
+    const date = new Date(referenceDate.split('/').reverse().join(","));
+    return `${formatMonthShortName(date)}/${formatYear(date)}`
   }
 
   serializeDataToChart = () => {
@@ -32,7 +35,7 @@ class Chat extends Component {
     if (dataProgram) {
       const dataSerialized = dataProgram.map((node) => (
         {
-          name: node.referenceDate,
+          month: this.parseToMonthShortNameAndYear(node.referenceDate),
           total: node.total,
           amountBeneficiaries: node.amountBeneficiaries,
         }
@@ -44,33 +47,45 @@ class Chat extends Component {
     }
   }
 
+  loadingMessage = () => {
+    return (
+      <LoadingMessageWrapper>
+        <LoadingMessage>
+          Carregando os dados
+        </LoadingMessage>
+      </LoadingMessageWrapper>
+    )
+  }
+
   render() {
     const { dataSerialized } = this.state
+    const { dataProgramLoading } = this.props
 
     return (
-      <BarChart width={980} height={720} data={dataSerialized}
-        margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis yAxisId="left" orientation="left" stroke="#8884d8" />
-        <YAxis yAxisId="right" orientation="right" stroke="#82ca9d" />
-        <Tooltip />
-        <Legend />
-        <Bar yAxisId="left" dataKey="total" fill="#8884d8" />
-        <Bar yAxisId="right" dataKey="amountBeneficiaries" fill="#82ca9d" />
-      </BarChart>
+      dataProgramLoading ? this.loadingMessage() : <ResponsiveContainer width="100%" height="100%">
+        <BarChart
+          data={dataSerialized}
+          margin={{ top: 15, right: 15, left: 15, bottom: 15 }}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="month" />
+          <YAxis yAxisId="left" orientation="left" stroke={theme.primary} />
+          <YAxis yAxisId="right" orientation="right" stroke={theme.gray} />
+          <Tooltip dataKey="total" formatter={(value) => formatDecimal(value)} />
+          <Legend />
+          <Bar name="Total (R$)" yAxisId="left" dataKey="total" fill={theme.primary} />
+          <Bar name="Beneficiários (un)" yAxisId="right" dataKey="amountBeneficiaries" fill={theme.gray} />
+        </BarChart>
+      </ResponsiveContainer>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  dataProgram: state.cities.dataProgram
+  dataProgram: state.cities.dataProgram,
+  dataProgramLoading: state.cities.dataProgramLoading
 });
-
-// const mapDispatchToProps = dispatch =>
-//   bindActionCreators(Actions, dispatch);
 
 export default connect(
   mapStateToProps,
-  // mapDispatchToProps
+  null
 )(Chat);

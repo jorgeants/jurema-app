@@ -8,6 +8,9 @@ const INITIAL_STATE = {
 	successMessage: null,
 	loading: false,
 	dataProgram: [],
+	dataProgramLoading: false,
+	errorDataProgram: false,
+	errorMessageDataProgram: null,
 };
 
 export default function cities(state = INITIAL_STATE, action) {
@@ -37,13 +40,20 @@ export default function cities(state = INITIAL_STATE, action) {
 			return {
 				...state,
 				idCity: action.payload.idCity,
+				dataProgramLoading: true,
 			}
 		case '@cities/LOAD_DATA_PROGRAM_SUCCESS':
 			return {
 				...state,
 				dataProgram: action.payload.dataProgram,
+				dataProgramLoading: false,
 			}
-
+		case '@cities/LOAD_DATA_PROGRAM_FAILURE':
+			return {
+				...state,
+				errorMessageDataProgram: action.payload.errorMessage,
+				dataProgramLoading: false,
+			}
 		default:
 			return state;
 	}

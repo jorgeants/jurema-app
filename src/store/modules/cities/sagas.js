@@ -39,8 +39,6 @@ function* fetchDataProgramToChat(monthYear, idCity) {
 			`/bolsa-familia-por-municipio?mesAno=${monthYear}&codigoIbge=${idCity}&pagina=1`,
 		);
 
-		console.tron.log(response.data);
-
 		const {
 			id,
 			dataReferencia,
@@ -55,8 +53,7 @@ function* fetchDataProgramToChat(monthYear, idCity) {
 			amountBeneficiaries: quantidadeBeneficiados,
 		}
 	} catch (error) {
-		// yield put(CitiesActions.loadCitiesFailure());
-		console.log(error);
+		yield put(CitiesActions.loadCitiesFailure());
 	}
 }
 
@@ -67,12 +64,9 @@ function* loadDataProgramRequest(action) {
 		const idCity = action.payload.idCity
 		const data = yield all(twelveMonthsAgoFormmated.map(monthYear => call(fetchDataProgramToChat, monthYear, idCity)));
 
-		console.log(data);
-
 		yield put(CitiesActions.loadDataProgramSuccess(data));
 	} catch (error) {
-		// yield put(CitiesActions.loadCitiesFailure());
-		console.log(error);
+		yield put(CitiesActions.loadDataProgramFailure("Error ao carregar os dados"));
 	}
 }
 

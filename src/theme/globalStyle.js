@@ -9,12 +9,20 @@ export const GlobalStyle = createGlobalStyle`
     font-family: 'Roboto', sans-serif;
 	}
 
+	* {
+		box-sizing: border-box;
+	}
+
 	h1 {
 		font-family: 'Imprima', sans-serif;
-		font-weight: 400;
+		font-weight: 600;
   }
 `
 
 export const theme = {
-	primary: '#2fbf9e',
+	primary: '#5ebefe',
+	secondary: '#11a99e',
+	gray: '#797979',
+	grayLight: '#c9c9c9',
+	light: '#FFF9F8',
 }
